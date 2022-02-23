@@ -1,0 +1,19 @@
+/backend/node_modules/
+/backend/package-lock.json
+
+
+/myapp/node_modules/
+/myapp/.expo/
+/myapp/dist/
+/myapp/npm-debug.*
+/myapp/*.jks
+/myapp/*.p8
+/myapp/*.p12
+/myapp/*.key
+/myapp/*.mobileprovision
+/myapp/*.orig.*
+/myapp/web-build/
+/myapp/package-lock.json
+
+# macOS
+/myapp/.DS_Store
