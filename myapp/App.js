@@ -4,42 +4,37 @@ import {MainPage} from "./components/MainPage"
 import {RegistrationPage} from "./components/RegistrationPage"
 import {createNativeStackNavigator} from '@react-navigation/native-stack'
 import {NavigationContainer} from "@react-navigation/native";
-import {ApolloProvider, ApolloClient, InMemoryCache} from "@apollo/client"
+import {
+    ApolloProvider,
+    InMemoryCache,
+    ApolloClient, gql, useQuery
+} from "@apollo/client"
+import GeneralComponent from "./generalComponents/GeneralComponent";
+
+const client = new ApolloClient({
+    uri: `http://192.168.0.157:3000/graphql`,
+    cache: new InMemoryCache()
+})
+const GET_USERS = gql`
+    query{
+        getAllUsers{
+    id, username, age
+  }
+}
+`
+
 
 export default function App() {
-    const Stack = createNativeStackNavigator()
-    const [localhost, setLocalhost] = useState('')
 
-    const client = new ApolloClient({
-        uri: `http://${localhost}:3000/graphql`,
-        cache: new InMemoryCache()
+    // const [localhost, setLocalhost] = useState('')
+    client.query({
+        query: GET_USERS
     })
-
-    const [isLogIn, setIsLogIn] = useState(false)
+        .then(res => console.log(res))
 
     return (
-        <NavigationContainer>
-            {!isLogIn ?
-            <Stack.Navigator>
-                <Stack.Screen
-                    name='Login'
-                >
-                    {props => <LoginPage {...props} changeState={setIsLogIn} />}
-                </Stack.Screen>
-                <Stack.Screen
-                    name='Registration'
-                    component={RegistrationPage}
-                />
-                <Stack.Screen
-                    name='Main' >
-                    {props => <MainPage {...props} changeState={setIsLogIn} />}
-                </Stack.Screen>
-            </Stack.Navigator>
-                :
-            <Stack.Navigator>
-                <Stack.Screen name='Main' component={MainPage} />
-            </Stack.Navigator>
-            }
-        </NavigationContainer>
+        <ApolloProvider client={client}>
+            <GeneralComponent/>
+        </ApolloProvider>
     )
 }
