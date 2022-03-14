@@ -1,13 +1,8 @@
-import React, {useState} from 'react'
-import {LoginPage} from "./components/LoginPage"
-import {MainPage} from "./components/MainPage"
-import {RegistrationPage} from "./components/RegistrationPage"
-import {createNativeStackNavigator} from '@react-navigation/native-stack'
-import {NavigationContainer} from "@react-navigation/native";
+import React from 'react'
 import {
     ApolloProvider,
     InMemoryCache,
-    ApolloClient, gql, useQuery
+    ApolloClient, gql
 } from "@apollo/client"
 import GeneralComponent from "./generalComponents/GeneralComponent";
 
@@ -18,7 +13,7 @@ const client = new ApolloClient({
 const GET_USERS = gql`
     query{
         getAllUsers{
-    id, username, age
+    id, username, age, password
   }
 }
 `

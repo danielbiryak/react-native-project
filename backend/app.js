@@ -20,9 +20,20 @@ const root = {
         console.log(t)
         return t
     },
-    createUser: ({input}) => {
+    userAuth: ({username, password}) => {
+        const user = users.find(s => s.username == username)
+        if(user && user.password == password)
+            return {
+                id: user.id,
+                username: user.username
+            }
+        else
+            return null
+    },
+    createUser: ({username, password}) => {
         const id = Date.now()
-        const user = {id: id, ...input}
+
+        const user = {id: id, username:username, password:password}
         users.push(user)
         return user
     }

@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import {Platform, Text, View, StyleSheet} from 'react-native';
+import {Text, View, StyleSheet, FlatList} from 'react-native';
 import {Button} from 'react-native-elements'
 import * as Location from 'expo-location';
-import {gql, useQuery, ApolloProvider} from "@apollo/client"
+import {useQuery} from "@apollo/client"
 import {GET_USERS} from "../query/getUsers";
 
-const URL = '192.168.0.157'
+const URL = '192.168.0.104'
 const PORT = '3000'
 const FULL_URL = URL + ':' + PORT
 
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     }
 })
 
-function MainPage({navigation, changeState}) {
+function MainPage({navigation, setUserId}) {
     const [location, setLocation] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
     // const [users, setUsers] = useState()
@@ -65,7 +65,9 @@ function MainPage({navigation, changeState}) {
         (getInfoFromServer)()
     }, [])
 
-    const {data, loading, error} = useQuery(GET_USERS)
+    const {data, loading, error} = useQuery(GET_USERS, {
+        pollInterval: 2000
+    })
     console.log(loading)
 
     let text = 'Waiting..';
@@ -89,28 +91,30 @@ function MainPage({navigation, changeState}) {
                 :
                 <Text style={styles.text}>{'\n\n\n\n\n\n\n'}{text}</Text>
             }
-            {changeState ?
-                <Button title='To login page' onPress={() => changeState(false)}/>
-                :
-                <Text style={styles.text}>It's alright</Text>
-            }
             {!loading ?
-                <Text>
-                    {data.getAllUsers.map(item => {
-                        return (
-                            <>
-                                <Text>Id: {item.id}</Text>
-                                <Text> Username: {item.username}</Text>
-                                <Text> Age: {item.age}</Text>
-                                {'\n'}
-                            </>
-                        )
-                    })}
-                </Text>
+                <FlatList
+                    data={data.getAllUsers}
+                    renderItem={({item}) => (
+                        <View>
+                            <Text>ID: {item.id} Username: {item.username} Age: {item.age}</Text>
+                        </View>
+                    )}
+                    keyExtractor={item => item.id}
+                    // keyExtractor={data.id}
+                />
                 :
                 <Text style={styles.text}>Loading...</Text>
             }
 
+            <Button
+                title='Log out'
+                onPress={() => {
+                    setUserId(0)
+                }}
+                // buttonStyle={
+                //
+                // }
+            />
 
         </View>
     )

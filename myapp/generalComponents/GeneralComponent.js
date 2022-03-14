@@ -6,35 +6,34 @@ import React, {useState} from "react";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 
 
-export default function GeneralComponent(){
-    const [isLogIn, setIsLogIn] = useState(false)
+export default function GeneralComponent() {
+    const [userId, setUserId] = useState(0)
     const Stack = createNativeStackNavigator()
 
     return (
         <NavigationContainer>
-            {!isLogIn ?
+            {userId == 0 ?
                 <Stack.Navigator>
-                    <Stack.Screen
-                        name='Login'
-                    >
-                        {props => <LoginPage
-                            {...props}
-                            changeState={setIsLogIn}
-                        />}
+                    <Stack.Screen name='Login'>
+                        {
+                            props => <LoginPage
+                                {...props}
+                                setUserId={setUserId}
+                            />
+                        }
                     </Stack.Screen>
                     <Stack.Screen
                         name='Registration'
                         component={RegistrationPage}
                     />
-                    <Stack.Screen
-                        name='Main'>
-                        {props => <MainPage {...props} changeState={setIsLogIn}/>}
-                    </Stack.Screen>
                 </Stack.Navigator>
                 :
                 <Stack.Navigator>
                     <Stack.Screen name='Main'>
-                        {props => <MainPage {...props} />}
+                        {props => <MainPage {...props}
+                                            userId={userId}
+                                            setUserId={setUserId}
+                        />}
                     </Stack.Screen>
                 </Stack.Navigator>
             }
