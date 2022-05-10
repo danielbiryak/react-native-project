@@ -96,7 +96,7 @@ function MainPage({navigation, setUserId}) {
                     data={data.getAllUsers}
                     renderItem={({item}) => (
                         <View>
-                            <Text>ID: {item.id} Username: {item.username} Age: {item.age}</Text>
+                            <Text>ID: {item.id} Username cringe: {item.username} Age: {item.age}</Text>
                         </View>
                     )}
                     keyExtractor={item => item.id}

@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  backend:
+    build: ./backend
+    restart: always
+    ports:
+      - 3000:3000
+    volumes:
+      - /backend/node_modules
+      - ./backend:/backend
+  # mobile:
+  #   build: ./myapp
+  #   ports:
+  #     - 19002:19002
+  #     - 19000:19000
+  #     - 19006:19006
+  #   volumes:
+  #     - /mobile/node_modules
+  #     - ./myapp:/mobile
+  #   environment:
+  #     - EXPO_DEVTOOLS_LISTEN_ADDRESS=0.0.0.0
+  #     - REACT_NATIVE_PACKAGER_HOSTNAME=192.168.0.157

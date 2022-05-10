@@ -49,7 +49,7 @@ server.use('/graphql', graphqlHTTP({
 const PORT = '3000'
 
 server.get('/', (req, res) => {
-    let response_text = 'Chillout fdfsdsf'
+    let response_text = 'This is the main page of backend server'
 
     res.json({some_text: response_text})
 })
