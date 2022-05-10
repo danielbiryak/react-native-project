@@ -15,6 +15,5 @@
 /myapp/*.orig.*
 /myapp/web-build/
 /.idea/
-/tests
 # macOS
 /myapp/.DS_Store
