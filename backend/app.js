@@ -14,9 +14,8 @@ const root = {
     getAllUsers: () => {
         return users
     },
-    getUser: ({id}) => {
-        console.log(id)
-        const t = users.find(user => user.id == id)
+    getUser: ({username}) => {
+        const t = users.find(user => user.username == username)
         console.log(t)
         return t
     },
@@ -30,12 +29,15 @@ const root = {
         else
             return null
     },
-    createUser: ({username, password}) => {
+    createUser: ({username, password, age}) => {
         const id = Date.now()
-
-        const user = {id: id, username:username, password:password}
-        users.push(user)
-        return user
+        const verify_user = users.find(user => user.username == username)
+        if (!verify_user) {
+            const user = {id: id, username:username, password:password, age: age}
+            users.push(user)
+            return user
+        } else
+            return null
     }
 }
 

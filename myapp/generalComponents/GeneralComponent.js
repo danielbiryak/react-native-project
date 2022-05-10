@@ -22,10 +22,16 @@ export default function GeneralComponent() {
                             />
                         }
                     </Stack.Screen>
-                    <Stack.Screen
-                        name='Registration'
-                        component={RegistrationPage}
-                    />
+
+                    <Stack.Screen name='Registration'>
+                        {
+                            props => <RegistrationPage
+                                {...props}
+                                setUserId={setUserId}
+                            />
+                        }
+                    </Stack.Screen>
+
                 </Stack.Navigator>
                 :
                 <Stack.Navigator>

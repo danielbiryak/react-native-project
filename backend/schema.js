@@ -27,12 +27,12 @@ const schema = buildSchema(`
     
     type Query {
         getAllUsers: [User]
-        getUser(id: ID): User
     }
     
     type Mutation {
-        createUser(username: String!, password: String!): User
+        createUser(username: String!, password: String!, age: Int!): User
         userAuth(username: String, password: String): User
+        getUser(username: String!): User
     }
 `)
 

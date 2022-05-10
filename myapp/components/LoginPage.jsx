@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
 function LoginPage({navigation, setUserId}) {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-    // const [state, setState] = useState(false)
+    //const [state, setState] = useState(false)
     const [visibleModal, setVisibleModal] = useState(false)
     const [authUser] = useMutation(AUTH_USER)
 
@@ -96,7 +96,7 @@ function LoginPage({navigation, setUserId}) {
             />
             <Button
                 title='Registration'
-                onPress={() => navigation.navigate('Registration')}
+                onPress={() => navigation.navigate('Registration') }
                 buttonStyle={{
                     backgroundColor: '#147900'
                 }}

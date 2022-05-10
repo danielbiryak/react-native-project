@@ -5,7 +5,7 @@ import * as Location from 'expo-location';
 import {useQuery} from "@apollo/client"
 import {GET_USERS} from "../query/getUsers";
 
-const URL = '192.168.0.104'
+const URL = '192.168.0.157'
 const PORT = '3000'
 const FULL_URL = URL + ':' + PORT
 

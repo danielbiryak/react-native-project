@@ -1,5 +1,6 @@
 /backend/node_modules/
 /backend/package-lock.json
+/backend/database/
 
 
 /myapp/node_modules/
@@ -13,7 +14,7 @@
 /myapp/*.mobileprovision
 /myapp/*.orig.*
 /myapp/web-build/
-/myapp/package-lock.json
-
+/.idea/
+/tests
 # macOS
 /myapp/.DS_Store
