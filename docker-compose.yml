@@ -9,6 +9,21 @@ services:
     volumes:
       - /backend/node_modules
       - ./backend:/backend
+      
+  mysql:
+    image: mysql
+    restart: always
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: social_net_db
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - '8888:8080'
   # mobile:
   #   build: ./myapp
   #   ports:

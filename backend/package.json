@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start-backend": "node app.js",
-    "start-dev-backend": "nodemon -L app.js",
+    "start-dev-backend": "nodemon -L -r esm app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -15,10 +15,9 @@
   },
   "dependencies": {
     "cors": "^2.8.5",
+    "esm": "^3.2.25",
     "express": "^4.17.3",
     "express-graphql": "^0.12.0",
-    "graphql": "^16.3.0",
-    "knex": "^0.95.15",
-    "sqlite3": "^5.0.2"
+    "mysql2": "^2.3.3"
   }
 }
