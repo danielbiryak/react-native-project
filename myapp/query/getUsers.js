@@ -1,11 +1,11 @@
-import {gql} from "@apollo/client"
+import { gql } from "@apollo/client"
 
 const GET_USERS = gql`
     query {
         getAllUsers {
             id
-            username
-            age
+            nickname
+            birthday_date
             password
         }
     }
@@ -21,15 +21,13 @@ const GET_USER = gql`
     }
 `
 const CREATE_USER = gql`
-    mutation createUser($username: String!, $password: String!, $age: Int!) {
-        createUser(username: $username, password: $password, age: $age) {
+    mutation createUser($nickname: String!, $name: String!, $password: String!, $birthday_date: String!){
+	    createUser(nickname: $nickname, name: $name, password:$password, birthday_date: $birthday_date){
             id
-            username
-            age
-            password
-        }
-    }
+            nickname
+    }  
+}
 
 `
 
-export {GET_USERS, GET_USER, CREATE_USER}
+export { GET_USERS, GET_USER, CREATE_USER }

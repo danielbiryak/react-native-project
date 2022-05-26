@@ -1,11 +1,3 @@
-const obj = {
-    id: {
-        lop: 54,
-        cringe: 22
-    }
-    , age: 30
-}
+let date = new Date(0,0,0,0,0,0,321425435)
 
-const {lop} = obj.id
-
-console.log(lop)
+console.log(date)

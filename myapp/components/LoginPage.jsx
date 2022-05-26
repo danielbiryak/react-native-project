@@ -31,18 +31,18 @@ const styles = StyleSheet.create({
 })
 
 function LoginPage({navigation, setUserId}) {
-    const [username, setUsername] = useState('')
+    const [nickname, setNickname] = useState('')
     const [password, setPassword] = useState('')
     //const [state, setState] = useState(false)
     const [visibleModal, setVisibleModal] = useState(false)
     const [authUser] = useMutation(AUTH_USER)
 
     const printFunc = () => {
-        console.log(`Username: ${username}\nPassword: ${password}`)
+        console.log(`Username: ${nickname}\nPassword: ${password}`)
     }
 
     const authorize = () => {
-        authUser({variables: {username, password}})
+        authUser({variables: {nickname, password}})
             .then(res => {
                 const data = res.data.userAuth
                 if (data != null)
@@ -52,6 +52,7 @@ function LoginPage({navigation, setUserId}) {
                 }
                 console.log(res)
             })
+            .catch(err => console.log(err))
     }
 
     return (
@@ -71,7 +72,7 @@ function LoginPage({navigation, setUserId}) {
                 </View>
             </Modal>
             <Input
-                onChangeText={value => setUsername(value)}
+                onChangeText={value => setNickname(value)}
                 placeholder="Username"
             />
             <Input

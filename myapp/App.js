@@ -13,7 +13,7 @@ const client = new ApolloClient({
 const GET_USERS = gql`
     query{
         getAllUsers{
-    id, username, age, password
+    id, nickname, password
   }
 }
 `
