@@ -12,8 +12,10 @@ const schema = buildSchema(`
     }
     type Post {
         id: ID
+        likes_count: Int
+        owner_id: String
         title: String
-        content: String
+        text_content: String
     }
     
     input UserInput {
@@ -23,6 +25,7 @@ const schema = buildSchema(`
     }
     input PostInput {
         id: ID
+        owner_id: Int
         title: String
         content: String
     }
@@ -36,6 +39,7 @@ const schema = buildSchema(`
         userAuth(nickname: String, password: String): User
         getUserById(id: Int!): User
         getUsersLimited(limit: Int!): [User]
+        getUsersPosts(id: Int!): [Post]
     }
 `)
 

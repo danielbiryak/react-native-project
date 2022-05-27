@@ -22,10 +22,10 @@ const GET_USERS = gql`
 export default function App() {
 
     // const [localhost, setLocalhost] = useState('')
-    client.query({
-        query: GET_USERS
-    })
-        .then(res => console.log(res))
+    // client.query({
+    //     query: GET_USERS
+    // })
+    //     .then(res => console.log(res))
 
     return (
         <ApolloProvider client={client}>

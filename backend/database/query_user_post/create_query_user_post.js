@@ -6,7 +6,7 @@ const getAllUsersPosts = async (id) =>
             if (err)
                 return reject(err)
             connection.query(
-                `SELECT * FROM user_post where `,
+                `SELECT * FROM user_post where owner_id = ${id}`,
                 (err, results) => {
                     if (err)
                         return reject(err)

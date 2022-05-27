@@ -1,5 +1,6 @@
 import {getAllUsers, getUserById, getUsersLimited, getUserByNickPassword } from '../database/query_user/read_query_user'
 import {createUser} from '../database/query_user/create_query_user'
+import { getUsersPosts } from '../database/query_user_post/read_query_user_post'
 
 const root = {
     /**
@@ -41,6 +42,10 @@ const root = {
     },
     createUser: async ({ nickname, password, name, birthday_date }) => {
         return await createUser(nickname, password, name, birthday_date)
+    },
+
+    getUsersPosts: async ({id}) => {
+        return await getUsersPosts(id)
     }
 }
 

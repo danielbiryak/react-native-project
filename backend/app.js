@@ -3,6 +3,7 @@ import { graphqlHTTP } from 'express-graphql'
 import cors from 'cors'
 import schema from './schema'
 import root from './graphql_root/root'
+import { getUsersPosts } from './database/query_user_post/read_query_user_post'
 
 // const express = require('express')
 // const graphqlHTTP = require('express-graphql').graphqlHTTP
@@ -32,7 +33,10 @@ server.get('/', async (req, res) => {
     let response_text = 'This is the main page of backend server'
     const time = 809308800000
     let f = new Date()
-    res.json({ some_text: f.getTime()})
+    //res.json({ some_text: f.getTime()})
+    let t = await getUsersPosts(1)
+    
+    res.json({obj: f})
 })
 
 server.listen(PORT, () => {
