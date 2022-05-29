@@ -32,4 +32,37 @@ const getUsersPosts = async (id) =>
         })
     )
 
-export { getUsersPosts }
+const getUsersLikeState = async (post_id, user_id) =>
+    new Promise((resolve, reject) =>
+        pool.getConnection((err, connection) => {
+            if (err) return reject(err)
+            connection.query(
+                `SELECT * from post_likes where user_id = ${user_id} and post_id = ${post_id}`,
+                (err, results) => {
+                    if (err) return reject(err)
+                    if (results[0] == null)
+                        resolve(false)
+                    else
+                        resolve(true)
+                }
+            )
+            connection.release()
+        })
+    )
+
+const getPostLikesCount = async (post_id) =>
+    new Promise((resolve, reject) =>
+        pool.getConnection((err, connection) => {
+            if (err) return reject(err)
+            connection.query(
+                `SELECT count(*) as 'likes_count' from post_likes where post_id = ${post_id}`,
+                (err, results) => {
+                    if (err) return reject(err)
+                    resolve(results[0].likes_count)
+                }
+            )
+            connection.release()
+        })
+    )
+
+export { getUsersPosts, getUsersLikeState, getPostLikesCount }

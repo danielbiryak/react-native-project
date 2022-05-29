@@ -4,6 +4,7 @@ import {RegistrationPage} from "../components/RegistrationPage";
 import {MainPage} from "../components/MainPage";
 import React, {useState} from "react";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
+import { PostPage } from "../components/PostPage";
 
 
 export default function GeneralComponent() {
@@ -14,7 +15,7 @@ export default function GeneralComponent() {
         <NavigationContainer>
             {userId == 0 ?
                 <Stack.Navigator>
-                    <Stack.Screen name='Login'>
+                    <Stack.Screen name='SocialNet Project'>
                         {
                             props => <LoginPage
                                 {...props}
@@ -39,6 +40,11 @@ export default function GeneralComponent() {
                         {props => <MainPage {...props}
                                             userId={userId}
                                             setUserId={setUserId}
+                        />}
+                    </Stack.Screen>
+                    <Stack.Screen name='Post'>
+                        {props => <PostPage {...props}
+                                            userId={userId}
                         />}
                     </Stack.Screen>
                 </Stack.Navigator>

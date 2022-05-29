@@ -1,8 +1,8 @@
 import {gql} from "@apollo/client"
 
 const AUTH_USER = gql`
-    mutation userAuth($nickname: String!, $password: String!) {
-        userAuth(nickname: $nickname, password: $password) {
+    mutation userAuth($user: UserAuthInput) {
+        userAuth(user: $user) {
             id
             nickname
         }

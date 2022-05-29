@@ -1,5 +1,4 @@
-//const {buildSchema} = require('graphql')
-import {buildSchema} from 'graphql'
+import { buildSchema } from 'graphql'
 
 const schema = buildSchema(`
     type User {
@@ -17,11 +16,15 @@ const schema = buildSchema(`
         title: String
         text_content: String
     }
-    
-    input UserInput {
+    input CreateUserInput {
+        nickname: String!
+        password: String!
+        name: String!
+        birthday_date: String!
+    }
+    input UserAuthInput {
         nickname: String
         password: String
-        age: Int
     }
     input PostInput {
         id: ID
@@ -35,15 +38,15 @@ const schema = buildSchema(`
     }
  
     type Mutation {
-        createUser(nickname: String!, password: String!, name: String!, birthday_date: String!): User
-        userAuth(nickname: String, password: String): User
+        createUser(user: CreateUserInput): User
+        userAuth(user: UserAuthInput): User
         getUserById(id: Int!): User
         getUsersLimited(limit: Int!): [User]
         getUsersPosts(id: Int!): [Post]
+        getUsersLikeState(post_id: Int!, user_id: Int!): Boolean
+        likePostMethod(post_id: Int!, user_id: Int!): Boolean
+        getPostLikesCount(post_id: Int!): Int
     }
 `)
 
-
-
-//module.exports = schema
 export default schema

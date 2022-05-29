@@ -1,6 +1,7 @@
 import {getAllUsers, getUserById, getUsersLimited, getUserByNickPassword } from '../database/query_user/read_query_user'
 import {createUser} from '../database/query_user/create_query_user'
-import { getUsersPosts } from '../database/query_user_post/read_query_user_post'
+import { getPostLikesCount, getUsersLikeState, getUsersPosts } from '../database/query_user_post/read_query_user_post'
+import { likePostMethod } from '../database/query_user_post/create_query_user_post'
 
 const root = {
     /**
@@ -35,17 +36,29 @@ const root = {
      * @param {password} str 
      * @returns if user is auth it returns user, else null
      */
-    userAuth: async ({ nickname, password }) => {
-        console.log(nickname)
-        console.log(password)
-        return await getUserByNickPassword(nickname, password)
+    userAuth: async ({user}) => {
+        console.log(JSON.stringify(user))
+
+        return await getUserByNickPassword(user.nickname,user.password)
     },
-    createUser: async ({ nickname, password, name, birthday_date }) => {
-        return await createUser(nickname, password, name, birthday_date)
+    createUser: async ({ user }) => {
+        return await createUser(user.nickname, user.password, user.name, user.birthday_date)
     },
 
     getUsersPosts: async ({id}) => {
         return await getUsersPosts(id)
+    },
+
+    getUsersLikeState: async({post_id, user_id}) => {
+        return await getUsersLikeState(post_id, user_id)
+    },
+
+    likePostMethod: async({post_id, user_id})=> {
+        return await likePostMethod(post_id, user_id)
+    },
+
+    getPostLikesCount: async({post_id}) => {
+        return await getPostLikesCount(post_id)
     }
 }
 

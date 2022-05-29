@@ -21,8 +21,8 @@ const GET_USER = gql`
     }
 `
 const CREATE_USER = gql`
-    mutation createUser($nickname: String!, $name: String!, $password: String!, $birthday_date: String!){
-	    createUser(nickname: $nickname, name: $name, password:$password, birthday_date: $birthday_date){
+    mutation createUser($user: CreateUserInput){
+	    createUser(user: $user){
             id
             nickname
     }  

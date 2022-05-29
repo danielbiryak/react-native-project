@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet, FlatList, ScrollView } from "react-native";
+import { Text, View, StyleSheet, FlatList } from "react-native";
 import { Button, ButtonGroup } from "react-native-elements";
-import * as Location from "expo-location";
-import { useMutation, useQuery } from "@apollo/client";
-import { GET_USERS } from "../query/getUsers";
+import { useMutation } from "@apollo/client";
 import { UserPost } from "./main_page/UserPost";
 import { GET_USERS_POSTS } from "../query/getUsersPosts";
 
@@ -28,27 +26,36 @@ const styles = StyleSheet.create({
 
 function MainPage({ navigation, setUserId, userId }) {
   const ButtonLogout = () => {
-    return(
+    return (
       <Button
-            title="Log out"
-            onPress={() => {
-              setUserId(0);
-            }}
-            buttonStyle={{
-              width: 148,       
-            }}          
-          />
-    )
-  }
+        title="Log out"
+        onPress={() => {
+          setUserId(0);
+        }}
+        buttonStyle={{
+          width: 148,
+        }}
+      />
+    );
+  };
 
-
+  const ButtonMainPage = () => {
+    return (
+      <Button
+        title="Main page"
+        disabled={true}
+        buttonStyle={{
+          width: 148,
+        }}
+      />
+    );
+  };
 
   // const [users, setUsers] = useState()
-  const [getUsersPosts] = useMutation(GET_USERS_POSTS)
-  const [data, setData] = useState(null)
+  const [getUsersPosts] = useMutation(GET_USERS_POSTS);
+  const [data, setData] = useState(null);
 
   let [info, setInfo] = useState(null);
-
 
   let infoFromServer;
   const getInfoFromServer = async () => {
@@ -74,12 +81,12 @@ function MainPage({ navigation, setUserId, userId }) {
     getInfoFromServer();
   }, []);
   useEffect(() => {
-    getUsersPosts({variables: {id: Number(userId)}})
-    .then(res => {
-      setData(res.data.getUsersPosts)
-    })
-    .catch(err => console.log('ERROR: ',err))  
-  }, [])
+    getUsersPosts({ variables: { id: Number(userId) } })
+      .then((res) => {
+        setData(res.data.getUsersPosts);
+      })
+      .catch((err) => console.log("ERROR: ", err));
+  }, []);
 
   // let text = "Waiting..";
   // if (errorMsg) {
@@ -94,27 +101,15 @@ function MainPage({ navigation, setUserId, userId }) {
         <FlatList
           data={data}
           renderItem={({ item }) => (
-            // <View>
-            //   <Text>
-            //     ID: {item.id} Nickname: {item.nickname}
-            //   </Text>
-            //   <Text>
-            //     Birthday date: {convertStringToDate(item.birthday_date)}
-            //   </Text>
-            // </View>
-            // <UserPost
-            //   id={item.id}
-            //   title={item.title}
-            //   text_content={item.text_content}
-            // />
-            <Text>{JSON.stringify(item)}</Text>
+            <UserPost
+              item={item}
+              navigation={navigation}
+            />
           )}
           keyExtractor={(item) => item.id}
-          // keyExtractor={data.id}
         />
-      ) : (
-        <Text style={styles.text}>Loading...</Text>
-      )}
+      ) : 
+      <Text>No posts</Text>}
 
       <View>
         {/* <Button
@@ -127,13 +122,11 @@ function MainPage({ navigation, setUserId, userId }) {
           }}
         /> */}
         <ButtonGroup
-          buttons={[{element: ButtonLogout},{element: ButtonLogout}]}
+          buttons={[{ element: ButtonLogout }, { element: ButtonMainPage }]}
           containerStyle={{
-            height: 40
+            height: 40,
           }}
-          buttonStyle={{
-            
-          }}
+          buttonStyle={{}}
         />
       </View>
     </View>

@@ -10,10 +10,9 @@ function RegistrationPage({ navigation, setUserId }) {
     container: {
       flex: 1,
       paddingTop: 100,
-      width: 360,
-      paddingHorizontal: 60,
-      alignSelf: "center",
-      backgroundColor: "#395159",
+      paddingHorizontal: 30,
+      alignSelf: "stretch",
+      backgroundColor: "#191919",
     },
     modal_failed: {
       backgroundColor: "#00000099",
@@ -31,14 +30,24 @@ function RegistrationPage({ navigation, setUserId }) {
     },
     calendar_group: {
       paddingVertical: 20,
-      paddingLeft: 30,
+      marginLeft: 10,
       borderWidth: 3,
       borderRadius: 50,
       borderColor: "black",
+      alignItems: "center",
+      width: 250,
     },
     calendar_text: {
       paddingBottom: 10,
       fontSize: 25,
+    },
+    register_container: {
+      borderWidth: 3,
+      borderColor: "#2D4263",
+      paddingHorizontal: 10,
+      paddingVertical: 20,
+      borderRadius: 20,
+      backgroundColor: "#2D4263",
     },
   });
 
@@ -64,10 +73,12 @@ function RegistrationPage({ navigation, setUserId }) {
     if (password && nickname && name) {
       create_user({
         variables: {
-          nickname,
-          password,
-          birthday_date: String(new Date(birthday).getTime()),
-          name,
+          user: {
+            nickname,
+            password,
+            birthday_date: String(new Date(birthday).getTime()),
+            name,
+          },
         },
       })
         .then((res) => {
@@ -90,56 +101,57 @@ function RegistrationPage({ navigation, setUserId }) {
           <Text style={styles.modal_failed_bot_text}>Tap on screen</Text>
         </View>
       </Modal>
-      <Input
-        onChangeText={(value) => setNickname(value)}
-        placeholder="Nickname"
-      />
-      <Input
-        onChangeText={(value) => setName(value)}
-        placeholder="Your actual name"
-      />
-      <View style={styles.calendar_group}>
-        <Text style={styles.calendar_text}>Select your age</Text>
-        <DatePicker
-          style={{ width: 170 }}
-          date={birthday}
-          mode="date"
-          placeholder="select date"
-          format="YYYY-MM-DD"
-          maxDate={minimal_age_registration}
-          confirmBtnText="Confirm"
-          cancelBtnText="Cancel"
-          customStyles={{
-            dateIcon: {
-              position: "absolute",
-              left: 0,
-              top: 4,
-              marginLeft: 0,
-            },
-            dateInput: {
-              marginLeft: 36,
-            },
-            // ... You can check the source to find the other keys.
-          }}
-          onDateChange={(date) => setBirthday(date)}
+      <View style={styles.register_container}>
+        <Input
+          onChangeText={(value) => setNickname(value)}
+          placeholder="Nickname"
+        />
+        <Input
+          onChangeText={(value) => setName(value)}
+          placeholder="Your actual name"
+        />
+        <View style={styles.calendar_group}>
+          <Text style={styles.calendar_text}>Select your age</Text>
+          <DatePicker
+            style={{ width: 170 }}
+            date={birthday}
+            mode="date"
+            placeholder="select date"
+            format="YYYY-MM-DD"
+            maxDate={minimal_age_registration}
+            confirmBtnText="Confirm"
+            cancelBtnText="Cancel"
+            customStyles={{
+              dateIcon: {
+                position: "absolute",
+                left: 0,
+                top: 4,
+                marginLeft: 0,
+              },
+              dateInput: {
+                marginLeft: 36,
+              },
+              // ... You can check the source to find the other keys.
+            }}
+            onDateChange={(date) => setBirthday(date)}
+          />
+        </View>
+        <Input
+          onChangeText={(value) => setPassword(value)}
+          style={{ paddingTop: 20 }}
+          placeholder="Password"
+          secureTextEntry={true}
         />
       </View>
-      <Input
-        onChangeText={(value) => setPassword(value)}
-        style={{ paddingTop: 20 }}
-        placeholder="Password"
-        secureTextEntry={true}
-      />
       <Button
         title="Register"
         onPress={() => {
-          // setUserId(25)
           registration();
           // navigation.push('Main')
-          //console.log((new Date(birthday).getTime()))
         }}
         buttonStyle={{
           backgroundColor: "#147900",
+          borderRadius: 20,
         }}
         containerStyle={{
           width: 220,
