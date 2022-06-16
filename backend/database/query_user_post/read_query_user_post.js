@@ -8,6 +8,7 @@ const getUsersPosts = async (id) =>
                 `SELECT * FROM user_post where owner_id = ${id}`,
                 (err, query_results) => {
                     if (err) return reject(err)
+                    if (query_results[0] == null) resolve(null)
                     let ids = query_results.map((item) => {
                         return item.id
                     })

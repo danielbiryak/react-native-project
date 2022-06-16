@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Text, View, StyleSheet, FlatList } from "react-native";
 import { Button, ButtonGroup } from "react-native-elements";
 import { useMutation } from "@apollo/client";
-import { UserPost } from "./main_page/UserPost";
+import { UserPostElement } from "./main_page/UserPostElement";
 import { GET_USERS_POSTS } from "../query/getUsersPosts";
 
 const URL = "192.168.0.157";
@@ -11,10 +11,10 @@ const FULL_URL = URL + ":" + PORT;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     backgroundColor: "#333",
-    alignItems: "stretch",
-    justifyContent: "flex-start",
+    // alignItems: "stretch",
+    // justifyContent: "flex-start",
     padding: 20,
   },
   text: {
@@ -24,109 +24,81 @@ const styles = StyleSheet.create({
   },
 });
 
-function MainPage({ navigation, setUserId, userId }) {
-  const ButtonLogout = () => {
-    return (
-      <Button
-        title="Log out"
-        onPress={() => {
-          setUserId(0);
-        }}
-        buttonStyle={{
-          width: 148,
-        }}
-      />
-    );
-  };
-
-  const ButtonMainPage = () => {
-    return (
-      <Button
-        title="Main page"
-        disabled={true}
-        buttonStyle={{
-          width: 148,
-        }}
-      />
-    );
-  };
-
+function MainPage({ navigation, userId }) {
   // const [users, setUsers] = useState()
   const [getUsersPosts] = useMutation(GET_USERS_POSTS);
   const [data, setData] = useState(null);
+  const [isChangedLike, setIsChangedLike] = useState(false);
 
-  let [info, setInfo] = useState(null);
-
-  let infoFromServer;
-  const getInfoFromServer = async () => {
-    fetch(`http://${FULL_URL}`)
-      .then((value) => {
-        // console.log('VALUE:' + JSON.stringify(value))
-        return value.json();
-      })
-      .then((data) => {
-        setInfo(data.some_text);
-        infoFromServer = data.some_text;
-        console.log("DATA:" + JSON.stringify(data));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  // useEffect(() => {
-  //   getLocation();
-  // }, []);
-  useEffect(() => {
-    getInfoFromServer();
-  }, []);
   useEffect(() => {
     getUsersPosts({ variables: { id: Number(userId) } })
       .then((res) => {
         setData(res.data.getUsersPosts);
       })
       .catch((err) => console.log("ERROR: ", err));
-  }, []);
-
-  // let text = "Waiting..";
-  // if (errorMsg) {
-  //   text = errorMsg;
-  // } else if (location) {
-  //   var position = location;
-  // }
+  }, [isChangedLike]);
 
   return (
     <View style={styles.container}>
       {data ? (
         <FlatList
+        showsVerticalScrollIndicator={false}
+          style={{ height: "94%" }}
           data={data}
           renderItem={({ item }) => (
-            <UserPost
+            <UserPostElement
               item={item}
               navigation={navigation}
+              setIsChangedLike={setIsChangedLike}
+              isChangedLike={isChangedLike}
             />
           )}
           keyExtractor={(item) => item.id}
         />
-      ) : 
-      <Text>No posts</Text>}
+      ) : (
+        <Text>No posts</Text>
+      )}
 
-      <View>
-        {/* <Button
-          title="Log out"
+      <View
+        style={{ flexDirection: "row", width: "100%", alignItems: "flex-end" }}
+      >
+        <Button
+          title="Search users"
           onPress={() => {
-            setUserId(0);
+            navigation.navigate("Search users");
           }}
-          buttonStyle={{
-            
+          style={{
+            // flex: 1,
+            height: 100,
           }}
-        /> */}
-        <ButtonGroup
-          buttons={[{ element: ButtonLogout }, { element: ButtonMainPage }]}
-          containerStyle={{
-            height: 40,
+          titleStyle={{
+            fontSize: 15
           }}
-          buttonStyle={{}}
+          containerStyle={{ width: "33%" }}
+        />
+        <Button
+          title="Main page"
+          disabled={true}
+          style={{
+            // flex: 1,
+            height: 100,
+          }}
+          containerStyle={{ width: "33%" }}
+        />
+        <Button
+          title="Add post"
+          style={{
+            // flex: 1,
+            height: 100,
+          }}
+          onPress={() => {
+            navigation.navigate("Add post",{
+              userId: userId,
+              isChangedLike, 
+              setIsChangedLike
+            });
+          }}
+          containerStyle={{ width: "33%" }}
         />
       </View>
     </View>

@@ -61,8 +61,7 @@ const getUserByNickPassword = async (nickname, password) =>
                 nickname='${nickname}' and
                 password='${password}'`,
                 (err, results) => {
-                    console.log(results)
-                    if (err) 
+                    if (err)
                         return reject(err)
                     if (results)
                         resolve(results[0])
@@ -73,5 +72,31 @@ const getUserByNickPassword = async (nickname, password) =>
             connection.release()
         })
     )
+const searchUsersByNickname = async (nickname) =>
+    new Promise((resolve, reject) =>
+        pool.getConnection((err, connection) => {
+            if (err)
+                return reject(err)
+            connection.query(
+                `SELECT *
+                FROM user
+                where nickname like ('%${nickname}%')
+                order by id`,
+                (err, results) => {
+                    if (err)
+                        return reject(err)
+                    if (results) resolve(results)
+                    else resolve(null)
+                }
+            )
+            connection.release()
+        })
+    )
 
-export { getAllUsers, getUserById, getUsersLimited, getUserByNickPassword }
+export {
+    getAllUsers,
+    getUserById,
+    getUsersLimited,
+    getUserByNickPassword,
+    searchUsersByNickname
+}

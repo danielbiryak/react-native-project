@@ -4,6 +4,7 @@
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start-frontend": "expo start",
+    "start-frontend-offline": "expo start --offline",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",

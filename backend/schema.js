@@ -46,6 +46,9 @@ const schema = buildSchema(`
         getUsersLikeState(post_id: Int!, user_id: Int!): Boolean
         likePostMethod(post_id: Int!, user_id: Int!): Boolean
         getPostLikesCount(post_id: Int!): Int
+        searchUsersByNickname(nickname: String!): [User]
+        createUserPost(owner_id: Int!, title: String!, text_content: String!): String
+        deleteUserPost(post_id: Int!): String
     }
 `)
 

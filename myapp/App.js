@@ -1,35 +1,24 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
     ApolloProvider,
     InMemoryCache,
-    ApolloClient, gql
+    ApolloClient
 } from "@apollo/client"
 import GeneralComponent from "./generalComponents/GeneralComponent";
 
-const client = new ApolloClient({
-    uri: `http://192.168.0.157:3000/graphql`,
-    cache: new InMemoryCache()
-})
-const GET_USERS = gql`
-    query{
-        getAllUsers{
-    id, nickname, password
-  }
-}
-`
-
-
 export default function App() {
 
-    // const [localhost, setLocalhost] = useState('')
-    // client.query({
-    //     query: GET_USERS
-    // })
-    //     .then(res => console.log(res))
+    const [ip, setIp] = useState('192.168.0.157')
+    const [port, setPort] = useState('3000')
+
+    const client = new ApolloClient({
+        uri: `http://${ip}:${port}/graphql`,
+        cache: new InMemoryCache()
+    })
 
     return (
         <ApolloProvider client={client}>
-            <GeneralComponent/>
+            <GeneralComponent setIp={setIp} setPort={setPort} ip={ip} port={port} />
         </ApolloProvider>
     )
 }

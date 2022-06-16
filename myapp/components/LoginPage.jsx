@@ -51,10 +51,6 @@ function LoginPage({ navigation, setUserId }) {
   const [visibleModal, setVisibleModal] = useState(false);
   const [authUser] = useMutation(AUTH_USER);
 
-  const printFunc = () => {
-    console.log(`Username: ${nickname}\nPassword: ${password}`);
-  };
-
   const authorize = () => {
     authUser({ variables: { user: { nickname, password } } })
       .then((res) => {
@@ -65,7 +61,10 @@ function LoginPage({ navigation, setUserId }) {
         }
         console.log(res);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        setVisibleModal(true);
+      });
   };
 
   return (
@@ -84,7 +83,7 @@ function LoginPage({ navigation, setUserId }) {
       <View style={styles.login_container}>
         <Input
           onChangeText={(value) => setNickname(value)}
-          placeholder="Username"
+          placeholder="Nickname"
         />
         <Input
           onChangeText={(value) => setPassword(value)}
@@ -104,6 +103,15 @@ function LoginPage({ navigation, setUserId }) {
           }}
           buttonStyle={{
             backgroundColor: "#415cff",
+          }}
+        />
+        <Button
+          title="Set up the server"
+          onPress={() => {
+            navigation.navigate("Set up");
+          }}
+          buttonStyle={{
+            backgroundColor: "#00000033",
           }}
         />
       </View>

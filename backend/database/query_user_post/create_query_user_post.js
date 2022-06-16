@@ -32,4 +32,20 @@ const likePostMethod = async (post_id, user_id) =>
         })
     )
 
-export { likePostMethod }
+const createUserPost = async (owner_id, title, text_content) =>
+    new Promise((resolve, reject) =>
+        pool.getConnection((err, connection) => {
+            if (err) return reject(err)
+            connection.query(
+                `INSERT INTO user_post (owner_id, title, text_content)
+                VALUES ('${owner_id}', '${title}', '${text_content}')`,
+                (err, results) => {
+                    if (err) return reject(err)
+                    resolve("Post have created")
+                }
+            )
+            connection.release()
+        })
+    )
+
+export { likePostMethod, createUserPost }

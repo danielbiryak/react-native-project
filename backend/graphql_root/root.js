@@ -1,7 +1,8 @@
-import {getAllUsers, getUserById, getUsersLimited, getUserByNickPassword } from '../database/query_user/read_query_user'
+import {getAllUsers, getUserById, getUsersLimited, getUserByNickPassword, searchUsersByNickname } from '../database/query_user/read_query_user'
 import {createUser} from '../database/query_user/create_query_user'
 import { getPostLikesCount, getUsersLikeState, getUsersPosts } from '../database/query_user_post/read_query_user_post'
-import { likePostMethod } from '../database/query_user_post/create_query_user_post'
+import { createUserPost, likePostMethod } from '../database/query_user_post/create_query_user_post'
+import { deleteUserPost } from '../database/query_user_post/delete_query_user_post'
 
 const root = {
     /**
@@ -59,6 +60,18 @@ const root = {
 
     getPostLikesCount: async({post_id}) => {
         return await getPostLikesCount(post_id)
+    },
+
+    searchUsersByNickname: async({nickname}) => {
+        return await searchUsersByNickname(nickname)
+    },
+
+    createUserPost: async({owner_id, title, text_content}) => {
+        return await createUserPost(owner_id, title, text_content)
+    },
+
+    deleteUserPost: async({post_id}) => {
+        return await deleteUserPost(post_id)
     }
 }
 

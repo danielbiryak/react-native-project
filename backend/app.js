@@ -3,7 +3,7 @@ import { graphqlHTTP } from 'express-graphql'
 import cors from 'cors'
 import schema from './schema'
 import root from './graphql_root/root'
-import { getUsersLikeState } from './database/query_user_post/read_query_user_post'
+import { searchUsersByNickname } from './database/query_user/read_query_user'
 
 // const express = require('express')
 // const graphqlHTTP = require('express-graphql').graphqlHTTP
@@ -34,7 +34,7 @@ server.get('/', async (req, res) => {
     const time = 809308800000
     let f = new Date()
     
-    let t = await getUsersLikeState(2, 1)
+    let t = await searchUsersByNickname("PO")
     
     res.json({obj: t})
 })
